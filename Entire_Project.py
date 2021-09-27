@@ -64,4 +64,27 @@ def Signin():
         Username_entry.delete(0, END)
         Password_entry.delete(0, END)
         Region_entry.delete(0, END)
+
+        # Creating new window
+
+        signupwindow = Toplevel()
+        signupwindow.geometry('650x400')
+        signupwindow.configure(bg="Light Yellow")
+        signupwindow.title(' SIGNUP FAST!')
+        signupwindow.resizable(False, False)
+        signupwindow.iconbitmap('bird.ico')
+
+        # Designing Frames
+
+        Frame1 = Frame(signupwindow, bd=10, bg='black', relief=RIDGE)
+        Frame1.place(x=15, y=0)
+
+        Frame2 = Label(Frame1, font=('Ubuntu', 20, 'bold'), fg="red", bg='White', text='Create Your Account ', padx=150)
+        Frame2.grid()
+
+        Details_entry = Frame(signupwindow, bd=10, bg='orange', width=810, height=690, padx=180, relief=RIDGE)
+        Details_entry.place(x=15, y=100)
+
+
+
 mainloop()
