@@ -85,6 +85,33 @@ def Signin():
         Details_entry = Frame(signupwindow, bd=10, bg='orange', width=810, height=690, padx=180, relief=RIDGE)
         Details_entry.place(x=15, y=100)
 
+        # Building and designing Labels, Entries and Buttons for SignUp Window
+        Name = Label(Details_entry, text='Name', fg="blue", bg="orange", font='Helvetica')
+        Name.grid(row=1, column=0)
+
+        Name_entry = Entry(Details_entry, font='Times', bd=3, relief=SUNKEN)
+        Name_entry.grid(row=1, column=1)
+
+        Username = Label(Details_entry, text="Username", fg="blue", bg="orange", font='Helvetica')
+        Username.grid(row=2, column=0)
+
+        Username_entry = Entry(Details_entry, font='Times', bd=3, relief=SUNKEN)
+        Username_entry.grid(row=2, column=1)
+
+        Password = Label(Details_entry, text="Password", fg="blue", bg="orange", font='Helvetica')
+        Password.grid(row=3, column=0)
+
+        Password_entry = Entry(Details_entry, show="*", font='Times', bd=3, relief=SUNKEN)
+        Password_entry.grid(row=3, column=1)
+
+        Region = Label(Details_entry, text="Region", fg="blue", bg="orange", font='Helvetica')
+        Region.grid(row=4, column=0)
+
+        Region_entry = Entry(Details_entry, font='Times', bd=3, relief=SUNKEN)
+        Region_entry.grid(row=4, column=1)
+
+        Submit = Button(Details_entry, text="Submit", font='Times ', bg="Light Green", command=signUp)
+        Submit.grid(row=5, column=1)
 
 
 mainloop()
