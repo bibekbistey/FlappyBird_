@@ -112,6 +112,31 @@ def Signin():
 
         Submit = Button(Details_entry, text="Submit", font='Times ', bg="Light Green", command=signUp)
         Submit.grid(row=5, column=1)
+# Making and Designing labels, entries and buttons for LogIn Window
 
+Username = Label(root, text="Username",fg="blue", bg="Light Green", font='Times')
+Username.place(x=170, y=70)
+
+Username_entry = Entry(root,  bd=3,font='Helvetica', relief=SUNKEN)
+Username_entry.place(x=270, y=70)
+
+Password = Label(root, text="Password", fg="blue", bg="light green",font='Times')
+Password.place(x=170, y=150)
+
+Password_entry = Entry(root,show="*",  bd=3,font='Helvetica', relief=SUNKEN)
+Password_entry.place(x=270, y=150)
+
+login_button = Button(root, text="LogIn",fg="blue", bg="Light Green", font='Cambria 15 italic',command=logdata)
+login_button.place(x=295, y=240)
+
+signup_button = Button(root, text="SignUp", fg="blue", bg="Light Green",font='Cambria 15 italic', command=Signin)
+signup_button.place(x=295, y=350)
+
+NewAccount = Label(root, text="First Time?",  fg='white', bg="red",font='Cambria 15 italic', width=10)
+NewAccount.place(x=270, y=300)
+
+conn.commit()
+
+conn.close()
 
 mainloop()
