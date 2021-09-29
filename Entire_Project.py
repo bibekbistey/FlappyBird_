@@ -179,3 +179,52 @@ conn.commit()
 conn.close()
 
 mainloop()
+
+import pygame
+import sys
+from pygame.locals import *
+import random
+
+
+
+#initializing pygame
+pygame.init()
+
+#For fps
+clock = pygame.time.Clock()
+fps = 40
+
+width=664
+height=636
+screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption('Flappy Bird')
+icon = pygame.image.load('icon.png')
+pygame.display.set_icon(icon)
+
+
+run = True
+while run:
+
+    clock.tick(fps)
+
+    #drawing background
+    screen.blit(bg, (0,0))
+
+    #Adding bird
+    screen.blit(bird_img,bird_rect)
+
+    #draw and move the ground
+    screen.blit(ground_img, (moving_ground, 568))
+    moving_ground -= ground_speed
+    if abs(moving_ground) > 35:
+        moving_ground = 0
+
+    #moving bird
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type==KEYDOWN:
+            if event.key==pygame.K_SPACE and not game_over  :
+                bird_movement=0
+                bird_movement=-7
