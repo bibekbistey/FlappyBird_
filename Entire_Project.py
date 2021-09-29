@@ -209,6 +209,26 @@ def obstacles():
     bottom_pipe = pipe_img.get_rect(midbottom=(660, pipex-200))
     return top_pipe,bottom_pipe
 
+#Defining function for collision
+
+def collision():
+    global game_over,score_time
+    for pipe in pipes:
+        if pipe.bottom>636:
+            screen.blit(pipe_img,pipe)
+        else:
+
+            flip_pipe=pygame.transform.flip(pipe_img,False,True)
+            screen.blit(flip_pipe,pipe)
+        pipe.centerx-=pipe_speed
+        if bird_rect.colliderect(pipe):
+            game_over=True
+            score_time=True
+
+
+#Game variables
+gravity=0.60
+
 #For ground
 
 moving_ground = 0
@@ -249,3 +269,35 @@ while run:
             if event.key==pygame.K_SPACE and not game_over  :
                 bird_movement=0
                 bird_movement=-7
+
+            if event.key == pygame.K_SPACE and game_over :
+                bird_rect=bird_img.get_rect(center=(67,622/2))
+                bird_movement=0
+                pipes=[]
+                game_over=False
+                score=0
+                score_time=True
+
+            if event.type == create_pipes:
+                pipes.extend(obstacles())
+
+        if not game_over:
+
+            bird_movement += gravity
+
+            bird_rect.centery += bird_movement
+
+            if bird_rect.top <= 5:
+                game_over = True
+                fall_sound.play()
+
+            if bird_rect.bottom >= 550:
+                game_over = True
+
+            collision()
+            score_display("game on")
+            score_update()
+
+        elif game_over:
+            screen.blit(game_over_image, game_over_rect)
+            score_display("game over")
