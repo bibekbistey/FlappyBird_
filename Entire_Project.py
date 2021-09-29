@@ -112,6 +112,45 @@ def Signin():
 
         Submit = Button(Details_entry, text="Submit", font='Times ', bg="Light Green", command=signUp)
         Submit.grid(row=5, column=1)
+
+def logdata():
+    conn = sqlite3.connect("Login and Registration.db")
+    c = conn.cursor()
+
+    name = Username_entry.get()
+    password = Password_entry.get()
+
+    c.execute("SELECT * FROM addressA")
+    record = c.fetchall()
+    print(record)
+    user = []
+    passw = []
+
+    for records in record:
+        user += [records[1]]
+        passw += [records[2]]
+    print(user)
+    print(passw)
+
+    if name in user and password in passw:
+        if user.index(name) == passw.index(password):
+            print("sucess")
+            import main
+
+
+        else:
+            messagebox.showinfo("FAILED", "Invalid Username or Password")
+
+    else:
+        messagebox.showinfo("FAILED", "Invalid Username or Password")
+
+    Username_entry.delete(0, END)
+    Password_entry.delete(0, END)
+
+    conn.commit()
+    conn.close()
+
+
 # Making and Designing labels, entries and buttons for LogIn Window
 
 Username = Label(root, text="Username",fg="blue", bg="Light Green", font='Times')
