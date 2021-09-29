@@ -201,6 +201,27 @@ pygame.display.set_caption('Flappy Bird')
 icon = pygame.image.load('icon.png')
 pygame.display.set_icon(icon)
 
+#Defining function for obstacles
+
+def obstacles():
+    pipex=random.randint(250,550)
+    top_pipe=pipe_img.get_rect(midtop=(660,pipex))
+    bottom_pipe = pipe_img.get_rect(midbottom=(660, pipex-200))
+    return top_pipe,bottom_pipe
+
+#For ground
+
+moving_ground = 0
+ground_speed = 4
+
+# Creating pipes
+
+pipe_height=[350,400,533,490]
+pipe_speed=4
+pipes=[]
+create_pipes=pygame.USEREVENT+1
+pygame.time.set_timer(create_pipes,1800)
+
 
 run = True
 while run:
