@@ -225,6 +225,51 @@ def collision():
             game_over=True
             score_time=True
 
+#Defining function to display Score
+
+def score_display(game_state):
+    if game_state == "game on":
+        display = SCORE_FONT.render(str(score), True, (255, 0, 0))
+        score_rect = display.get_rect(center=(350, 60))
+        screen.blit(display, score_rect)
+    elif game_state=="game over":
+        display = SCORE_FONT.render(f" Score:{score}", True, ( 255,255, 0))
+        score_rect = display.get_rect(center=(350, 100))
+        screen.blit(display, score_rect)
+
+        high_score_display = SCORE_FONT.render(f"High Score:{high_score}", True, ( 255,255, 0))
+        high_score_rect = high_score_display.get_rect(center=(350, 225))
+        screen.blit(high_score_display, high_score_rect)
+
+
+
+
+#Defining function to update score
+def score_update():
+    global score, score_time, high_score
+    if pipes:
+        for pipe in pipes:
+            if 65 < pipe.centerx < 69 and score_time:
+                score += 1
+                score_sound.play()
+
+                score_time = False
+
+            if pipe.left <= 0:
+                score_time = True
+
+
+    if score > high_score:
+        high_score = score
+
+#Defining function for text object
+def text_object(text, font):
+    textSurface = font.render(text, True, (255,255,255))
+    return textSurface, textSurface.get_rect()
+
+
+font = pygame.font.Font('freesansbold.ttf', 20)
+
 
 #Game variables
 gravity=0.60
@@ -241,6 +286,20 @@ pipe_speed=4
 pipes=[]
 create_pipes=pygame.USEREVENT+1
 pygame.time.set_timer(create_pipes,1800)
+
+# For Score
+
+score=0
+high_score=0
+score_time=True
+
+#Score card font
+SCORE_FONT = pygame.font.Font('freesansbold.ttf', 32)
+
+#Game over Variables
+
+game_over=False
+game_over_rect=game_over_image.get_rect(center=(width//2,height//2))
 
 
 run = True
