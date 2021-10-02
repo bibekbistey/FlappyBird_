@@ -224,6 +224,7 @@ def collision():
         if bird_rect.colliderect(pipe):
             game_over=True
             score_time=True
+            hit_sound.play()
 
 #Defining function to display Score
 
@@ -301,7 +302,39 @@ SCORE_FONT = pygame.font.Font('freesansbold.ttf', 32)
 game_over=False
 game_over_rect=game_over_image.get_rect(center=(width//2,height//2))
 
+#for bird
+bird_movement=0
 
+#Bir images
+
+bird_up = pygame.image.load("up.png")
+bird_mid = pygame.image.load("mid.png")
+bird_down = pygame.image.load("down.png")
+
+# To flap bird
+BIRDS = [bird_up, bird_mid, bird_down]
+bird_index = 0
+BIRD_FLAP = pygame.USEREVENT
+pygame.time.set_timer(BIRD_FLAP, 200)
+bird_img = BIRDS[bird_index]
+bird_rect = bird_img.get_rect(center=(67, 622//2))
+
+#Loading  images
+
+bg = pygame.image.load("bacground4.jpg")
+ground_img = pygame.image.load("ground.png")
+pipe_img=pygame.image.load("../FlappyBird_/pipe.1.png")
+game_over_image=pygame.image.load("gameover2.png")
+
+
+#Game sound
+
+score_sound = pygame.mixer.Sound("score.wav")
+flap_sound = pygame.mixer.Sound("flap_sound.wav")
+fall_sound = pygame.mixer.Sound("Fall.wav")
+hit_sound = pygame.mixer.Sound("Hit_sound.wav")
+
+#Game Loop
 run = True
 while run:
 
@@ -328,6 +361,7 @@ while run:
             if event.key==pygame.K_SPACE and not game_over  :
                 bird_movement=0
                 bird_movement=-7
+                flap_sound.play()
 
             if event.key == pygame.K_SPACE and game_over :
                 bird_rect=bird_img.get_rect(center=(67,622/2))
