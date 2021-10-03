@@ -363,34 +363,62 @@ while run:
                 bird_movement=-7
                 flap_sound.play()
 
-            if event.key == pygame.K_SPACE and game_over :
+                if event.key == pygame.K_SPACE and game_over :
                 bird_rect=bird_img.get_rect(center=(67,622/2))
                 bird_movement=0
                 pipes=[]
                 game_over=False
                 score=0
                 score_time=True
+        if event.type == BIRD_FLAP:
+            bird_index += 1
+
+            if bird_index > 2:
+                bird_index = 0
+
+            bird_img = BIRDS[bird_index]
+            bird_rect = bird_img.get_rect(center=bird_rect.center)
 
             if event.type == create_pipes:
                 pipes.extend(obstacles())
 
-        if not game_over:
 
-            bird_movement += gravity
+    if not game_over:
 
-            bird_rect.centery += bird_movement
+        bird_movement += gravity
 
-            if bird_rect.top <= 5:
-                game_over = True
-                fall_sound.play()
+        bird_rect.centery += bird_movement
 
-            if bird_rect.bottom >= 550:
-                game_over = True
+        if bird_rect.top <= 5:
+            game_over = True
+            fall_sound.play()
 
-            collision()
-            score_display("game on")
-            score_update()
+        if bird_rect.bottom >= 550:
+            game_over = True
 
-        elif game_over:
+        collision()
+        score_display("game on")
+        score_update()
+
+     elif game_over:
             screen.blit(game_over_image, game_over_rect)
             score_display("game over")
+
+    # Creating Pause button
+
+    pygame.draw.rect(screen, (0, 150, 0), (50, 0, 50, 50))
+    mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+    if mouse[0] > 50 and mouse[0] < 100 and mouse[1] > 0 and mouse[1] < 50:
+        pygame.draw.rect(screen, (0, 80, 0), (50, 0, 50, 50))
+        if click == (True, 0, 0):
+            paused()
+    else:
+        pygame.draw.rect(screen, (0, 250, 0), (50, 0, 50, 50))
+    smallText = pygame.font.Font('freesansbold.ttf', 25)
+    textSurface, textRect = text_object("II", smallText)
+    textRect.center = ((50 + 50 / 2)), (0 + 50 / 2)
+    screen.blit(textSurface, textRect)
+    pygame.display.update()
+
+pygame.quit()
