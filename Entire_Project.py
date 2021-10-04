@@ -185,8 +185,6 @@ import sys
 from pygame.locals import *
 import random
 
-
-
 #initializing pygame
 pygame.init()
 
@@ -271,6 +269,59 @@ def text_object(text, font):
 
 font = pygame.font.Font('freesansbold.ttf', 20)
 
+#Defining function for pause button
+def paused():
+    pause = True
+
+    while pause:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+                sys.exit()
+        screen.blit(bg, (0, 0))
+        largeText = pygame.font.Font('freesansbold.ttf', 100)
+        textSurface, textRect = text_object("PAUSED", largeText)
+        textRect.center = ((350), (150))
+        screen.blit(textSurface, textRect)
+
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+
+        # For Continue Button
+
+        if mouse[0] > 90 and mouse[0] < 220 and mouse[1] > 350 and mouse[1] < 500:
+            pygame.draw.rect(screen, (0, 0, 205), (90, 350, 150, 50))
+            if click == (True, 0, 0):
+                pause = False
+
+        else:
+            pygame.draw.rect(screen, (0, 0, 255), (90, 350, 150, 50))
+        smallText = pygame.font.Font('freesansbold.ttf', 25)
+        textSurface, textRect = text_object("CONTINUE", smallText)
+        textRect.center = ((90 + (150 / 2)), (350 + (50 / 2)))
+        screen.blit(textSurface, textRect)
+
+       # For Quit Button
+
+        if mouse[0] > 450 and mouse[0] < 550 and mouse[1] > 350 and mouse[1] < 500:
+            pygame.draw.rect(screen, (139,0,0), (450, 350, 150, 50))
+            if click == (True, 0, 0):
+                pygame.quit()
+                sys.exit()
+
+        else:
+            pygame.draw.rect(screen, (255,0,0), (450, 350, 150, 50))
+
+        smallText = pygame.font.Font('freesansbold.ttf', 25)
+        textSurface, textRect = text_object("QUIT", smallText)
+        textRect.center = ((450 + (150 / 2)), (350 + (50 / 2)))
+        screen.blit(textSurface, textRect)
+
+        pygame.display.update()
+        clock.tick(30)
+
 
 #Game variables
 gravity=0.60
@@ -297,11 +348,6 @@ score_time=True
 #Score card font
 SCORE_FONT = pygame.font.Font('freesansbold.ttf', 32)
 
-#Game over Variables
-
-game_over=False
-game_over_rect=game_over_image.get_rect(center=(width//2,height//2))
-
 #for bird
 bird_movement=0
 
@@ -325,6 +371,11 @@ bg = pygame.image.load("bacground4.jpg")
 ground_img = pygame.image.load("ground.png")
 pipe_img=pygame.image.load("../FlappyBird_/pipe.1.png")
 game_over_image=pygame.image.load("gameover2.png")
+
+#Game over Variables
+
+game_over=False
+game_over_rect=game_over_image.get_rect(center=(width//2,height//2))
 
 
 #Game sound
@@ -364,12 +415,12 @@ while run:
                 flap_sound.play()
 
                 if event.key == pygame.K_SPACE and game_over :
-                bird_rect=bird_img.get_rect(center=(67,622/2))
-                bird_movement=0
-                pipes=[]
-                game_over=False
-                score=0
-                score_time=True
+                    bird_rect=bird_img.get_rect(center=(67,622/2))
+                    bird_movement=0
+                    pipes=[]
+                    game_over=False
+                    score=0
+                    score_time=True
         if event.type == BIRD_FLAP:
             bird_index += 1
 
@@ -400,7 +451,7 @@ while run:
         score_display("game on")
         score_update()
 
-     elif game_over:
+    elif game_over:
             screen.blit(game_over_image, game_over_rect)
             score_display("game over")
 
